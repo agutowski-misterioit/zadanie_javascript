@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A.Gutowski</title>
+</head>
+<body>
+    <p id="zdanie">Super jest to zdanie, zaraz je obrócimy.</p>
+    <p id="odwroconeZdanie">odwrócenie</p>
+    <script>
+        // funkcja obrot przyjmuje za parametr ciąg znaków (czyli zdanie)
+        function obrot(string){
+
+            // zadeklarowanie zmiennej która zwróci wynik;
+            // var wynik;
+
+            // dodanie do tablicy wyrazów i obrócenie całej tablicy
+            var tablica = string.split(" ").reverse();
+
+            // przeiterowanie tablicy z warunkami zmiany poszczególnych jej elementów
+            tablica.forEach( function(elementTablicy, index){
+
+                // jeżeli pierwszy element tablicy, to zmiana na: wyraz z wielkiej litery, oraz usunięcie kropki
+                if(index == 0){
+                    tablica[index] = elementTablicy.charAt(0).toUpperCase() + elementTablicy.slice(1).replace(".","");
+                };
+
+                // jeżeli ostatni element tablicy, to zmiana na: wyraz z małej litery
+                if(index == tablica.length-1){
+                    tablica[index] = elementTablicy.charAt(0).toLowerCase() + elementTablicy.slice(1);
+                };
+
+                // jeżeli wyraz kończy się przecinkiem, to go usuń a następnie dodaj przecinek do poprzedniego elementu tablicy
+                if(elementTablicy.includes(',')){
+                    tablica[index] = elementTablicy.replace(",","");
+                    tablica[index-1] = tablica[index-1].concat(",");
+                };
+
+                // dodanie elementów tablicy do stringa i kropki na końcu
+                string = tablica.join(" ") + ".";
+            });
+
+            // zwrócenie obróconego zdania wraz ze zmianami warunkowymi
+            return string;
+        };
+
+        // pobranie wartości stringa z elementu o podanym ID
+        var zdanie = document.getElementById("zdanie").textContent;
+        
+        // wpisanie zwrócenej wartości funkcji obrót do elementu o podanym ID 
+        document.getElementById("odwroconeZdanie").innerHTML = obrot(zdanie);
+
+    </script>
+</body>
+</html>
